@@ -1,0 +1,37 @@
+### Nginx Server Container ##################################
+
+nginx:
+    image: gitlab.kodeks.ru:4567/docker/nginx
+    volumes_from:
+        - application
+    expose:
+        - "80"
+    links:
+        - php-fpm
+    labels:
+        - "traefik.frontend.rule=Host:${HOST}"
+        - "traefik.port=80"
+    env_file: .env
+
+### PHP-FPM Container #######################################
+
+php-fpm:
+    image: gitlab.kodeks.ru:4567/docker/php-fpm
+    volumes_from:
+        - application
+    expose:
+        - "9000"
+    labels:
+        - "traefik.enable=false"
+    dns:
+        - 172.17.0.1
+        - 10.0.0.10
+
+### Laravel Application Code Container ######################
+
+application:
+    image: gitlab.kodeks.ru:4567/docker/app
+    volumes:
+        - .:/var/www
+
+### Add more Containers below ###############################
