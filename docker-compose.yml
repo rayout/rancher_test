@@ -31,6 +31,7 @@ php-fpm:
 
 application:
     image: gitlab.kodeks.ru:4567/docker/app
+    #image: test/rancher
     volumes:
         - .:/var/www
 
