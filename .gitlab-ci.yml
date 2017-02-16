@@ -16,10 +16,6 @@ variables:
   - "docker info"
   - "docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY"
 
-.docker_after: &docker_after
-  - "docker images"
-  - "docker logout $CI_REGISTRY"
-
 composer:
   stage: compile
   tags:
@@ -32,22 +28,20 @@ build:
   stage: build
   tags:
     - docker
-  script:
   before_script: *docker_before
+  script:
     - docker build -t $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME .
     - docker push $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME
-  after_script: *docker_after
 
 release-latest:
   stage: release
   tags:
     - docker
+  before_script: *docker_before
   script:
-    before_script: *docker_before
     - docker pull $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME
     - docker tag $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME $CI_REGISTRY_IMAGE:latest
     - docker push $CI_REGISTRY_IMAGE:latest
     - docker rmi $CI_REGISTRY_IMAGE:latest
-    after_script: *docker_after
   only:
     - master
