@@ -26,7 +26,7 @@ composer:
     - docker
   image: gitlab.kodeks.ru:4567/docker/composer
   script:
-    - install
+    - composer install
 
 build:
   stage: build
