@@ -1,13 +1,12 @@
 image: "docker:latest"
 
 stages:
-  - build_app
-  - build_image
+  - build-app
+  - build-image
   - release
 
 services:
 - docker:dind
-- composer/composer:alpine
 
 variables:
   DOCKER_DRIVER: overlay
@@ -21,16 +20,16 @@ after_script:
   - "docker images"
   - "docker logout $CI_REGISTRY"
 
-run_composer:
-  stage: build_app
+run-composer:
+  stage: build-app
   tags:
     - docker
-  image:
+  image: composer/composer:alpine
   script:
     - composer install
 
-build_image:
-  stage: build_image
+build-image:
+  stage: build-image
   tags:
     - docker
   script:
