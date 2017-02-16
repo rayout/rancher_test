@@ -1,4 +1,4 @@
-FROM gitlab.kodeks.ru:4567/docker/workspace7
+FROM busybox
 
 MAINTAINER Shapovalov Alexandr <alex_sh@kodeks.ru>
 
