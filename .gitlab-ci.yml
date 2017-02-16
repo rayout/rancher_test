@@ -24,7 +24,7 @@ composer:
   stage: compile
   tags:
     - docker
-  image: composer/composer:alpine
+  image: gitlab.kodeks.ru:4567/docker/composer
   script:
     - install
 
