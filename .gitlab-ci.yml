@@ -23,6 +23,7 @@ composer:
   image: gitlab.kodeks.ru:4567/docker/composer
   script:
     - composer install
+    - ls -la
 
 build:
   stage: build
@@ -30,6 +31,7 @@ build:
     - docker
   before_script: *docker_before
   script:
+    - ls -la
     - docker build -t $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME .
     - docker push $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME
 
