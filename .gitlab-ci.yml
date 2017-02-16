@@ -1,8 +1,8 @@
 image: "docker:latest"
 
 stages:
-  - build-app
-  - build-image
+  - compile
+  - build
   - release
 
 services:
@@ -20,16 +20,16 @@ after_script:
   - "docker images"
   - "docker logout $CI_REGISTRY"
 
-run-composer:
-  stage: build-app
+composer:
+  stage: compile
   tags:
     - docker
   image: composer/composer:alpine
   script:
-    - composer install
+    - install
 
-build-image:
-  stage: build-image
+build:
+  stage: build
   tags:
     - docker
   script:
