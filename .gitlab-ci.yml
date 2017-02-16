@@ -28,7 +28,7 @@ composer:
     - docker
   image: gitlab.kodeks.ru:4567/docker/composer
   script:
-    - php -r \"file_exists('.env') || copy('.env.example', '.env');\"
+    - php -r "file_exists('.env') || copy('.env.example', '.env');"
     - php artisan key:generate
     - composer install
 
