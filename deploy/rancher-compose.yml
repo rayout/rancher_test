@@ -1,0 +1,40 @@
+version: '2'
+services:
+  web:
+    scale: 1
+    upgrade_strategy:
+      start_first: true
+    health_check:
+      port: 80
+      interval: 2000
+      unhealthy_threshold: 3
+      strategy: recreate
+      response_timeout: 2000
+      healthy_threshold: 2
+  php-fpm:
+    scale: 1
+    upgrade_strategy:
+      start_first: true
+  application:
+    scale: 1
+    upgrade_strategy:
+      start_first: true
+  db-write:
+    scale: 1
+  db-read:
+    scale: 1
+  db-read-lb:
+    scale: 1
+    start_on_create: true
+    lb_config:
+       port_rules:
+       - source_port: 5432
+         target_port: 5432
+         protocol: tcp
+         service: db-read
+    health_check:
+      port: 42
+      interval: 2000
+      unhealthy_threshold: 3
+      healthy_threshold: 2
+      response_timeout: 2000

@@ -1,11 +1,11 @@
-FROM composer/composer:alpine
+FROM gitlab.kodeks.ru:4567/docker/workspace7
 
 MAINTAINER Shapovalov Alexandr <alex_sh@kodeks.ru>
 
 COPY . /var/www/
-VOLUME ["/var/www"]
-WORKDIR /var/www
+WORKDIR /var/www/
 
-RUN composer install
+RUN /usr/local/bin/composer.phar install
 
-ENTRYPOINT 'true'
+
+ENTRYPOINT ["true"]

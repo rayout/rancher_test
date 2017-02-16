@@ -1,0 +1,92 @@
+version: '2'
+
+services:
+  ### Nginx Server Container ##################################
+  web:
+      image: gitlab.kodeks.ru:4567/docker/nginx
+      volumes_from:
+          - application
+      depends_on:
+          - db-write
+          - db-read
+      expose:
+          - "80"
+      links:
+          - php-fpm
+          - db-write
+          - db-read-lb
+      labels:
+          traefik.enable: domain
+          traefik.domain: ${HOST}
+          traefik.port: 80
+          io.rancher.container.pull_image: always
+          io.rancher.sidekicks: php-fpm, application
+      environment:
+          - HOST=${HOST}
+          - PUBLIC_PATH=${PUBLIC_PATH}
+
+  ### PHP-FPM Container #######################################
+
+  php-fpm:
+      image: gitlab.kodeks.ru:4567/docker/php-fpm
+      volumes_from:
+          - application
+      expose:
+          - "9000"
+      labels:
+          traefik.enable: false
+          io.rancher.container.pull_image: always
+      dns:
+          - 172.17.0.1
+          - 10.0.0.10
+
+  ### Laravel Application Code Container ######################
+
+  application:
+      image: gitlab.kodeks.ru:4567/freezy/rancher_test
+      labels:
+          traefik.enable: false
+          io.rancher.container.pull_image: always
+          io.rancher.container.start_once: true
+      stdin_open: true
+      volumes:
+          - test1:/var/www
+
+
+  db-write:
+      image: sameersbn/postgresql:9.6-2
+      expose:
+          - 5432
+      environment:
+          - DEBUG=false
+          - DB_USER=test
+          - DB_PASS=test
+          - DB_NAME=db_test
+          - REPLICATION_MODE=master
+          - REPLICATION_USER=replicator
+          - REPLICATION_PASS=replpassword
+      labels:
+          traefik.enable: false
+      volumes:
+          - /storage/db/rtest:/var/lib/postgresql
+
+  db-read:
+      image: sameersbn/postgresql:9.6-2
+      links:
+          - db-write:master
+      environment:
+          - DEBUG=false
+          - REPLICATION_MODE=slave
+          - REPLICATION_HOST=master
+          - REPLICATION_USER=replicator
+          - REPLICATION_PASS=replpassword
+      expose:
+          - "5432"
+
+  db-read-lb:
+      image: rancher/lb-service-haproxy:v0.5.9
+
+volumes:
+  test1:
+    driver: rancher-nfs
+    external: true

@@ -1,0 +1,4 @@
+export RANCHER_URL=http://rancher.dmz/v2-beta/projects/1a139
+export RANCHER_ACCESS_KEY=BEC3E81D63E38F37EDE1
+export RANCHER_SECRET_KEY=E56DwvLQCUx4mHAMWq42YMxEf47hFjdozbRYCg6Q
+export COMPOSE_PROJECT_NAME=rtest.dev
