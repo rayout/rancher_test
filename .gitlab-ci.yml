@@ -16,6 +16,10 @@ variables:
   - "docker info"
   - "docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY"
 
+cache:
+  untracked: true
+  key: "$CI_BUILD_REF_NAME"
+
 composer:
   stage: compile
   tags:
