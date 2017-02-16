@@ -25,7 +25,7 @@ composer:
   tags:
     - docker
   image: gitlab.kodeks.ru:4567/docker/composer
-  service:
+  services:
     - docker:dind
   script:
     - install
