@@ -54,3 +54,21 @@ release-latest:
     - docker rmi $CI_REGISTRY_IMAGE:latest
   only:
     - master
+
+deploy: &deploy
+    script:
+      - rancher-compose --url $RANCHER_URL --access-key $RANCHER_KEY --secret-key $RANCHER_SECRET
+        -p $CI_PROJECT_NAME -e .env up --upgrade --confirm-upgrade --pull -d
+
+deploy_dev:
+      <<: *deploy
+      variables:
+        RANCHER_URL: $RANCHER_URL_DEV
+        RANCHER_KEY: $RANCHER_KEY_DEV
+        RANCHER_SECRET: $RANCHER_SECRET_DEV
+      environment:
+        name: dev
+      only:
+        - dev
+        - develop
+        - master

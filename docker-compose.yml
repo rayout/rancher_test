@@ -30,7 +30,7 @@ php-fpm:
 ### Laravel Application Code Container ######################
 
 application:
-    image: gitlab.kodeks.ru:4567/docker/app
+    image: gitlab.kodeks.ru:4567/freezy/rancher_test
     #image: test/rancher
     volumes:
         - .:/var/www

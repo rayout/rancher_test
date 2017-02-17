@@ -50,7 +50,7 @@ services:
           io.rancher.container.start_once: true
       stdin_open: true
       volumes:
-          - test1:/var/www
+          - /var/www
 
 
   db-write:
@@ -86,7 +86,7 @@ services:
   db-read-lb:
       image: rancher/lb-service-haproxy:v0.5.9
 
-volumes:
-  test1:
-    driver: rancher-nfs
-    external: true
+#volumes:
+#  test1:
+#    driver: rancher-nfs
+#    external: true
