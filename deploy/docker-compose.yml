@@ -68,7 +68,7 @@ services:
       labels:
           traefik.enable: false
       volumes:
-          - /storage/db/rtest:/var/lib/postgresql
+          - /storage/db/${COMPOSE_PROJECT_NAME}:/var/lib/postgresql
 
   db-read:
       image: sameersbn/postgresql:9.6-2
