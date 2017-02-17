@@ -33,14 +33,6 @@ composer:
     - composer install
     - php artisan key:generate
 
-wtf:
-  stage: compile
-  tags:
-    - docker
-  image: gitlab.kodeks.ru:4567/docker/composer
-  script:
-    - php -r "sleep(5);"
-
 build:
   stage: build
   tags:
@@ -64,7 +56,7 @@ release-latest:
   only:
     - master
 
-deploy: &deploy
+.deploy: &deploy
     stage: deploy
     script:
       - rancher-compose --url $RANCHER_URL --access-key $RANCHER_KEY --secret-key $RANCHER_SECRET
