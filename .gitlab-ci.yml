@@ -32,6 +32,7 @@ composer:
     - php -r "file_exists('.env') || copy('.env.example', '.env');"
     - composer install
     - php artisan key:generate
+    - ls -la
 
 .build:
   stage: build
