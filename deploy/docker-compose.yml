@@ -15,9 +15,6 @@ services:
           - php-fpm
           - db-write
           - db-read-lb
-      environment:
-          HOST:
-          PUBLIC_PATH:
       labels:
           traefik.enable: domain
           traefik.domain: ${HOST}
