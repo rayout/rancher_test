@@ -60,8 +60,8 @@ cache:
     stage: deploy
     script:
       - ls -la
-      - ./deploy/rancher-compose --url $RANCHER_URL --access-key $RANCHER_KEY --secret-key $RANCHER_SECRET
-        -p $CI_PROJECT_NAME -e .env up --upgrade --confirm-upgrade --pull -d
+      - cd deploy && ./rancher-compose --url $RANCHER_URL --access-key $RANCHER_KEY --secret-key $RANCHER_SECRET
+        -p $CI_PROJECT_NAME -e ../.env up --upgrade --confirm-upgrade --pull -d
 
 deploy_dev:
       <<: *deploy
