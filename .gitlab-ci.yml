@@ -66,7 +66,7 @@ release-latest:
       - ls -la
       - ls -la deploy
       - cd deploy && ./rancher-compose --url $RANCHER_URL --access-key $RANCHER_KEY --secret-key $RANCHER_SECRET
-        -p $CI_PROJECT_NAME -e .env up --upgrade --confirm-upgrade -d
+        -p $CI_PROJECT_NAME -e .env up --upgrade --confirm-upgrade --force-upgrade -d
 
 deploy_dev:
       <<: *deploy
